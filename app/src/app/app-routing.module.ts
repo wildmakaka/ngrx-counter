@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CounterComponent } from 'src/app/counter/counter/counter.component';
 import { HomeComponent } from 'src/app/home/home.component';
+import { AddPostComponent } from 'src/app/posts/add-post/add-post.component';
 import { PostsListComponent } from 'src/app/posts/posts-list/posts-list.component';
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   {
     path: 'posts',
     component: PostsListComponent,
+    children: [{ path: 'add', component: AddPostComponent }],
   },
 ];
 
