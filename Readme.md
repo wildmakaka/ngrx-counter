@@ -35,4 +35,4 @@ Package                      Version
 
 <br/>
 
-[Materials](//jsdev.org/client/angular/ngrx/)
+[Materials](//jsdev.org/courses/angular/ngrx/angular-ngrx-complete-course-tutorial/)
