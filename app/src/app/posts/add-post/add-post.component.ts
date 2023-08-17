@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Post } from 'src/app/models/posts.model';
+import { addPost } from 'src/app/posts/state/posts.actions';
+import { AppState } from 'src/app/store/app.state';
 
 @Component({
   selector: 'app-add-post',
@@ -8,6 +12,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class AddPostComponent implements OnInit {
   postForm: FormGroup;
+
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.postForm = new FormGroup({
@@ -22,13 +28,6 @@ export class AddPostComponent implements OnInit {
     });
   }
 
-  onAddPost() {
-    if (!this.postForm.valid) {
-      return;
-    }
-    console.log(this.postForm);
-  }
-
   showDescriptionErrors() {
     const descriptionForm = this.postForm.get('description');
     if (descriptionForm?.touched && !descriptionForm.valid) {
@@ -40,5 +39,18 @@ export class AddPostComponent implements OnInit {
         return 'Description should be of minimum 10 characters length';
       }
     }
+  }
+
+  onAddPost() {
+    if (!this.postForm.valid) {
+      return;
+    }
+
+    const post: Post = {
+      title: this.postForm.value.title,
+      description: this.postForm.value.description,
+    };
+
+    this.store.dispatch(addPost({ post }));
   }
 }
