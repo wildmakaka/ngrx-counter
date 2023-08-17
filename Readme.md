@@ -2,10 +2,6 @@
 
 <br/>
 
-http://localhost:4200/counter
-
-<br/>
-
 ```
 $ ng version
 
