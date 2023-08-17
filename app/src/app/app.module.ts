@@ -15,6 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { AddPostComponent } from './posts/add-post/add-post.component';
 import { PostsListComponent } from './posts/posts-list/posts-list.component';
 import { HeaderComponent } from './shared/component/header/header.component';
+import { EditPostComponent } from './posts/edit-post/edit-post.component';
 
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ import { HeaderComponent } from './shared/component/header/header.component';
     HeaderComponent,
     PostsListComponent,
     AddPostComponent,
+    EditPostComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
