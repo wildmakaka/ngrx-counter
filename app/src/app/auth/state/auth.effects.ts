@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { exhaustMap, map } from 'rxjs';
+import { catchError, exhaustMap, map, of } from 'rxjs';
 import { loginStart, loginSuccess } from 'src/app/auth/state/auth.actions';
 import { AuthService } from 'src/app/services/auth.service';
 import { AppState } from 'src/app/store/app.state';
-import { setLoadingSpinner } from 'src/app/store/shared/shared.actions';
+import {
+  setErrorMessage,
+  setLoadingSpinner,
+} from 'src/app/store/shared/shared.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -22,8 +25,16 @@ export class AuthEffects {
         return this.authService.login(action.email, action.password).pipe(
           map((data) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
+            this.store.dispatch(setErrorMessage({ message: '' }));
             const user = this.authService.formatUser(data);
             return loginSuccess({ user });
+          }),
+          catchError((errorResponse) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
+            const errorMessage = this.authService.getErrorMessage(
+              errorResponse.error.error.message
+            );
+            return of(setErrorMessage({ message: errorMessage }));
           })
         );
       })
