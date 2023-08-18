@@ -11,7 +11,7 @@ export class AuthService {
   login(email: string, password: string) {
     return this.http.post(
       `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.FIREBASE_API_KEY}`,
-      { email, password, returnSecureTorken: true }
+      { email, password, returnSecureToken: true }
     );
   }
 }
