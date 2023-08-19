@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from 'src/app/auth/state/auth.effects';
 import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
+      { path: 'signup', component: SignupComponent },
     ],
   },
 ];
@@ -23,6 +25,6 @@ const routes: Routes = [
     EffectsModule.forFeature([AuthEffects]),
     RouterModule.forChild(routes),
   ],
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, SignupComponent],
 })
 export class AuthModule {}
