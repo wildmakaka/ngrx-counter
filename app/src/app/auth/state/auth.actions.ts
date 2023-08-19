@@ -26,5 +26,5 @@ export const signupStart = createAction(
 
 export const signupSuccess = createAction(
   SIGNUP_SUCCESS,
-  props<{ user: User }>
+  props<{ user: User }>()
 );
