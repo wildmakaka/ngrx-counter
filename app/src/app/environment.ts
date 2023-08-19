@@ -1,3 +1,3 @@
 export const environment = {
-  FIREBASE_API_KEY: 'AIzaSyCnOfitnRQVkoLEblPC1BPldRjBI-1YKMM',
+  FIREBASE_API_KEY: 'AIzaSyA9HEOZrRHZP026VQObeDz2PVD_GLpMV50',
 };
