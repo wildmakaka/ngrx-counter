@@ -4,6 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { catchError, exhaustMap, map, of, tap } from 'rxjs';
 import {
+  autoLogin,
   loginStart,
   loginSuccess,
   signupStart,
@@ -34,6 +35,7 @@ export class AuthEffects {
             this.store.dispatch(setLoadingSpinner({ status: false }));
             this.store.dispatch(setErrorMessage({ message: '' }));
             const user = this.authService.formatUser(data);
+            this.authService.setUserInLocalStorage(user);
             return loginSuccess({ user });
           }),
           catchError((errorResponse) => {
@@ -56,6 +58,7 @@ export class AuthEffects {
           map((data) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
             const user = this.authService.formatUser(data);
+            this.authService.setUserInLocalStorage(user);
             return signupSuccess({ user });
           }),
           catchError((errorResponse) => {
@@ -77,6 +80,19 @@ export class AuthEffects {
         tap((action) => {
           this.store.dispatch(setErrorMessage({ message: '' }));
           this.router.navigate(['/']);
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
+  autoLogin$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(autoLogin),
+        map((action) => {
+          const user = this.authService.getUserFromLocalStorage();
+          console.log(user);
         })
       );
     },

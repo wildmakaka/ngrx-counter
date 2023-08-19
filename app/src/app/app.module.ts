@@ -6,6 +6,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppRoutingModule } from 'src/app/app-routing.module';
+import { AuthEffects } from 'src/app/auth/state/auth.effects';
 import { appReducer } from 'src/app/store/app.state';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -19,7 +20,7 @@ import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loa
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AuthEffects]),
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
