@@ -3,7 +3,12 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { catchError, exhaustMap, map, of, tap } from 'rxjs';
-import { loginStart, loginSuccess } from 'src/app/auth/state/auth.actions';
+import {
+  loginStart,
+  loginSuccess,
+  signupStart,
+  signupSuccess,
+} from 'src/app/auth/state/auth.actions';
 import { AuthService } from 'src/app/services/auth.service';
 import { AppState } from 'src/app/store/app.state';
 import {
@@ -43,11 +48,34 @@ export class AuthEffects {
     );
   });
 
-  loginRedirect$ = createEffect(
+  signUp$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(signupStart),
+      exhaustMap((action) => {
+        return this.authService.signUp(action.email, action.password).pipe(
+          map((data) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
+            const user = this.authService.formatUser(data);
+            return signupSuccess({ user });
+          }),
+          catchError((errorResponse) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
+            const errorMessage = this.authService.getErrorMessage(
+              errorResponse.error.error.message
+            );
+            return of(setErrorMessage({ message: errorMessage }));
+          })
+        );
+      })
+    );
+  });
+
+  redirect$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(loginSuccess),
+        ofType(...[loginSuccess, signupSuccess]),
         tap((action) => {
+          this.store.dispatch(setErrorMessage({ message: '' }));
           this.router.navigate(['/']);
         })
       );
