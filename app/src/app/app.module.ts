@@ -10,6 +10,7 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { AuthEffects } from 'src/app/auth/state/auth.effects';
 import { AuthTokenInterceptor } from 'src/app/services/AuthToken.interceptor';
 import { appReducer } from 'src/app/store/app.state';
+import { CustomSerializer } from 'src/app/store/router/custom-serializer';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './shared/components/header/header.component';
@@ -31,7 +32,7 @@ import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loa
       trace: false, //  If set to true, will include stack trace for every dispatched action, so you can see it in trace tab jumping directly to that part of code
       traceLimit: 75, // maximum stack trace frames to be stored (in case trace option was provided as true)
     }),
-    StoreRouterConnectingModule.forRoot(),
+    StoreRouterConnectingModule.forRoot({ serializer: CustomSerializer }),
   ],
   declarations: [
     AppComponent,
