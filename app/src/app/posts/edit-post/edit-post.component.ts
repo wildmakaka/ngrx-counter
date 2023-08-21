@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Post } from 'src/app/models/posts.model';
@@ -18,21 +18,18 @@ export class EditPostComponent implements OnInit, OnDestroy {
   postForm: FormGroup;
   postSubscription: Subscription;
 
-  constructor(
-    private route: ActivatedRoute,
-    private store: Store<AppState>,
-    private router: Router
-  ) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      const id = params.get('id');
-      this.postSubscription = this.store
-        .select(getPostById, { id })
-        .subscribe((data) => {
-          this.post = data;
-          this.createForm();
+    this.createForm();
+    this.postSubscription = this.store.select(getPostById).subscribe((post) => {
+      if (post) {
+        this.post = post;
+        this.postForm.patchValue({
+          title: post.title,
+          description: post.description,
         });
+      }
     });
   }
 
@@ -44,11 +41,11 @@ export class EditPostComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.postForm = new FormGroup({
-      title: new FormControl(this.post.title, [
+      title: new FormControl(null, [
         Validators.required,
         Validators.minLength(6),
       ]),
-      description: new FormControl(this.post.description, [
+      description: new FormControl(null, [
         Validators.required,
         Validators.minLength(10),
       ]),
