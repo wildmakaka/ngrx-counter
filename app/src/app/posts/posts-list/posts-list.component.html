@@ -30,6 +30,10 @@
             <button class="btn btn-danger" (click)="onDeletePost(post.id!)">
               Delete
             </button>
+            &nbsp;
+            <button class="btn btn-info" [routerLink]="['details', post.id]">
+              Details
+            </button>
           </td>
         </tr>
         <tr></tr>

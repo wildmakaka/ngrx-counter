@@ -10,6 +10,7 @@ import { PostsListComponent } from 'src/app/posts/posts-list/posts-list.componen
 import { PostsEffects } from 'src/app/posts/state/posts.effects';
 import { postsReducer } from 'src/app/posts/state/posts.reducer';
 import { POST_STATE_NAME } from 'src/app/posts/state/posts.selector';
+import { SinglePostComponent } from './single-post/single-post.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,6 @@ const routes: Routes = [
     StoreModule.forFeature(POST_STATE_NAME, postsReducer),
     EffectsModule.forFeature([PostsEffects]),
   ],
-  declarations: [PostsListComponent, AddPostComponent, EditPostComponent],
+  declarations: [PostsListComponent, AddPostComponent, EditPostComponent, SinglePostComponent],
 })
 export class PostsModule {}
