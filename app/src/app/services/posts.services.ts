@@ -48,4 +48,10 @@ export class PostsService {
       `https://vue-completecourse.firebaseio.com/posts.json?id=${id}`
     );
   }
+
+  getPostById(id: string): Observable<Post> {
+    return this.http.get<Post>(
+      `https://vue-completecourse.firebaseio.com/posts.json?id=${id}`
+    );
+  }
 } // The End of Class;

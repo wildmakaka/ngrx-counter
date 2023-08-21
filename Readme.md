@@ -2,6 +2,10 @@
 
 <br/>
 
+[My Deploy](https://angular-ngrx-complete-course-tutorial.vercel.app/)
+
+<br/>
+
 ```
 $ ng version
 
