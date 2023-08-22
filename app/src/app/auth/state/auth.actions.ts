@@ -42,3 +42,7 @@ export const autoLogin = createAction(AUTO_LOGIN_ACTION);
 export const AUTO_LOGOUT_ACTION = '[auth page] logout';
 
 export const autoLogout = createAction(AUTO_LOGOUT_ACTION);
+
+// ------------------------------
+
+export const dummyAction = createAction('[dummy action]');
