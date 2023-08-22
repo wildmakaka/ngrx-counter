@@ -5,68 +5,21 @@ import {
   loadPostsSuccess,
   updatePostSuccess,
 } from 'src/app/posts/state/posts.actions';
-import { initialState } from 'src/app/posts/state/posts.state';
+import { initialState, postsAdapter } from 'src/app/posts/state/posts.state';
 
 const _postsReducer = createReducer(
   initialState,
-  // on(addPost, (state, action) => {
-  //   let post = { ...action.post };
-  //   post.id = (state.posts.length + 1).toString();
-  //   return {
-  //     ...state,
-  //     posts: [...state.posts, post],
-  //   };
-  // }),
   on(addPostSuccess, (state, action) => {
-    let post = { ...action.post };
-    return {
-      ...state,
-      posts: [...state.posts, post],
-    };
+    return postsAdapter.addOne(action.post, state);
   }),
-  // on(updatePost, (state, action) => {
-  //   const updatedPost = state.posts.map((post) => {
-  //     return action.post.id === post.id ? action.post : post;
-  //   });
-
-  //   return {
-  //     ...state,
-  //     posts: updatedPost,
-  //   };
-  // }),
   on(updatePostSuccess, (state, action) => {
-    const updatedPost = state.posts.map((post) => {
-      return action.post.id === post.id ? action.post : post;
-    });
-
-    return {
-      ...state,
-      posts: updatedPost,
-    };
+    return postsAdapter.updateOne(action.post, state);
   }),
-  // on(deletePost, (state, { id }) => {
-  //   const updatedPosts = state.posts.filter((post) => {
-  //     return post.id !== id;
-  //   });
-  //   return {
-  //     ...state,
-  //     posts: updatedPosts,
-  //   };
-  // }),
   on(deletePostSuccess, (state, { id }) => {
-    const updatedPosts = state.posts.filter((post) => {
-      return post.id !== id;
-    });
-    return {
-      ...state,
-      posts: updatedPosts,
-    };
+    return postsAdapter.removeOne(id, state);
   }),
   on(loadPostsSuccess, (state, action) => {
-    return {
-      ...state,
-      posts: action.posts,
-    };
+    return postsAdapter.setAll(action.posts, state);
   })
 );
 
